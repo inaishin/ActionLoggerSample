@@ -67,11 +67,11 @@ public class MoveInfo {
 	}
 	
 	
-	/*public String getUseid() {
+	public String getUseid() {
 		return useid;
 	}
 	public void setUseid(String useid) {
 		this.useid = useid;
-	}*/
+	}
 	
 }

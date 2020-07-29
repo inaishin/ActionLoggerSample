@@ -41,6 +41,9 @@ public class AddMove extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
 		
+		HttpSession session = req.getSession(); //セッションスコープの生成
+		String userid=(String)session.getAttribute("userid"); //セッションスコープからインスタンス取得
+		
 		MoveInfo move = new MoveInfo(); //MoveInfoクラスのインスタンス化
 		move.setDay( req.getParameter("day") ); //Moveクラスset~メソッドにリクエストパラメータ[day]を渡す
 		move.setStarttime( req.getParameter("starttime"));
@@ -48,9 +51,10 @@ public class AddMove extends HttpServlet {
 		move.setPlace( req.getParameter("place") );
 		move.setReason( req.getParameter("reason") );
 		move.setOther( req.getParameter("other") );
+		move.setUseid(userid);
 		
 		try {
-			HttpSession session = req.getSession(); //セッションスコープの生成
+			
 			session.setAttribute("moveToAdd", move); //セッションスコープに"useToAdd"という属性名でuesrインスタンス保存 
 		    
 			RequestDispatcher dispatcher =

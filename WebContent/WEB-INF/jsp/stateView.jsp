@@ -66,7 +66,8 @@
 				<%//各クラスごとに格納されてる要素取得 %>
 				<tr>
 					<td><%=move.getDay()%></td>
-					<td><%=move.getStarttime()%> ~ <%=move.getFinishtime()%></td>
+					<td><%=move.getStarttime()%></td>
+					<td><%=move.getFinishtime()%></td>
 					<td><%=move.getPlace()%></td>
 					<td><%=move.getReason()%></td>
 					<td><%=move.getOther()%></td>
