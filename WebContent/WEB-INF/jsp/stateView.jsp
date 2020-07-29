@@ -59,15 +59,14 @@
           </thead>
           <tbody>
             <% MoveDAO moveDao= new MoveDAO(); //MoveDAOインスタンス生成 %>
-			<% List<MoveInfo> moveList=moveDao.findAll(); //MoveDAO内findAll(テーブル全検索)をリストに格納%> 
+			<% List<MoveInfo> moveList=moveDao.findAll(userid); //MoveDAO内findAll(テーブル全検索)をリストに格納%> 
 			<% 
 				for(MoveInfo move : moveList){ //リスト内に格納されてるMoveInfoクラスを返す
 			%>
 				<%//各クラスごとに格納されてる要素取得 %>
 				<tr>
 					<td><%=move.getDay()%></td>
-					<td><%=move.getStarttime()%></td>
-					<td><%=move.getFinishtime()%></td>
+					<td><%=move.getStarttime()%> ~ <%=move.getFinishtime()%></td>
 					<td><%=move.getPlace()%></td>
 					<td><%=move.getReason()%></td>
 					<td><%=move.getOther()%></td>

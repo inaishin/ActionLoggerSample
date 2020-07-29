@@ -23,15 +23,17 @@ public class MoveDAO {
 		
 		//ユーザーIDを指定して、ユーザー情報を取得
 		//ユーザーIDが存在しない場合はnullを返す
-		public List<MoveInfo> findAll() { //DB内情報の全取得
+		public List<MoveInfo> findAll(String userid) { //DB内情報の全取得,引数ありでログイン中のuserid受取
 			List<MoveInfo> moveList=new ArrayList<>(); //list生成
 
 			// データベース接続
 			try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
-
+					
 				// SELECT文の準備
-				String sql = "SELECT * FROM MOVE ORDER BY DAY DESC";
+				String sql = "SELECT * FROM MOVE WHERE userid=? ORDER BY DAY DESC,FTIME DESC";
 				PreparedStatement pStmt = conn.prepareStatement(sql); //PreparedStatementクラス：SQL文をDBに送信する
+				//?に条件文セット
+				pStmt.setString(1,userid); //MoveInfoクラスに格納されているuseridを条件式に記述
 				// SELECTを実行
 				ResultSet rs = pStmt.executeQuery(); //ResultSetクラス：DBMSから検索結果受取,
 				
@@ -55,6 +57,7 @@ public class MoveDAO {
 			return moveList;
 		}
 
+		
 		//ユーザーを指定して、活動記録をDBに追加
 		//戻り値:true 成功 , false 失敗
 		public boolean save(MoveInfo move) {
@@ -64,7 +67,7 @@ public class MoveDAO {
 				// INSERT文の準備(idは自動連番なので指定しなくてよい）
 				String sql = "INSERT INTO MOVE " + "( day, stime, ftime, place, reason, other, userid ) "
 						+ "VALUES ( ?, ?, ?, ?, ?, ?, ? )";
-				PreparedStatement pStmt = conn.prepareStatement(sql); //PreparedStatementインターフェース:SQL分を表す
+				PreparedStatement pStmt = conn.prepareStatement(sql); //PreparedStatementインターフェース:SQL文を表す
 				// INSERT文中の「?」に使用する値を設定しSQLを完成
 				pStmt.setString(1, move.getDay()); //DBにデータ登録
 				pStmt.setString(2, move.getStarttime());

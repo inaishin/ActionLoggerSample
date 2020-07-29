@@ -5,6 +5,8 @@
 <%@page import="dao.MoveDAO"%>  <% //DB検索に関するクラスインポート %>
 <%@page import="java.util.List" %>
 
+<% String userid=(String)session.getAttribute("userid"); //セッションスコープからインスタンス取得 %>
+
 <div
 	class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
 	<h1 class="h2">行動記録</h1>
@@ -24,7 +26,7 @@
 		<tbody>
 		
 			<% MoveDAO moveDao= new MoveDAO(); //MoveDAOインスタンス生成 %>
-			<% List<MoveInfo> moveList=moveDao.findAll(); //MoveDAO内findAll(テーブル全検索)をリストに格納%> 
+			<% List<MoveInfo> moveList=moveDao.findAll(userid); //MoveDAO内findAll(テーブル全検索)をリストに格納%> 
 			<% 
 				for(MoveInfo move : moveList){ //リスト内に格納されてるMoveInfoクラスを返す
 			%>

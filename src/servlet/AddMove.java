@@ -51,7 +51,7 @@ public class AddMove extends HttpServlet {
 		move.setPlace( req.getParameter("place") );
 		move.setReason( req.getParameter("reason") );
 		move.setOther( req.getParameter("other") );
-		move.setUseid(userid);
+		move.setUseid(userid); //セッションスコープから取得した値をMoveInfoクラスにセット
 		
 		try {
 			
