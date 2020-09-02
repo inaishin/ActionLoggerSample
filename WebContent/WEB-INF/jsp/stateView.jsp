@@ -26,18 +26,7 @@
               <th scope="row" class="col-2 text-right">氏名</th>
               <td><%=username %></td>
             </tr>
-            <tr class="d-flex">
-              <th scope="row" class="col-2 text-right">参加グループ</th>
-              <td></td>
-            </tr>
-            <tr class="d-flex">
-              <th scope="row" class="col-2 text-right"></th>
-              <td></td>
-            </tr>
-            <tr class="d-flex">
-              <th scope="row" class="col-2 text-right">管理グループ</th>
-              <td></td>
-            </tr>
+            
             <tr class="d-flex">
               <th scope="row" class="col-2 text-right"></th>
               <td></td>
