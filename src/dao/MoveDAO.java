@@ -21,6 +21,7 @@ public class MoveDAO {
 		private final String DB_PASS = "";
 		
 		
+		
 		//ユーザーIDを指定して、ユーザー情報を取得
 		//ユーザーIDが存在しない場合はnullを返す
 		public List<MoveInfo> findAll(String userid) { //DB内情報の全取得,引数ありでログイン中のuserid受取
@@ -52,11 +53,50 @@ public class MoveDAO {
 				}
 			} catch (SQLException e) {//エラー処理
 				e.printStackTrace(); 
-				return null;
+				//return null;
 			}
 			return moveList;
 		}
+		
+		
+		
+		//DB検索
+		public List<MoveInfo> Search(String userid,String day,String place) { //DB内情報の全取得,引数ありでログイン中のuserid受取
+			List<MoveInfo> searchList=new ArrayList<>(); //list生成
 
+			// データベース接続
+			try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
+					
+				// SELECT文の準備
+				String sql = "SELECT * FROM MOVE WHERE userid=? AND DAY LIKE '%"+day+"%' AND PLACE LIKE '%"+place+"%' ORDER BY DAY DESC,FTIME DESC";
+				PreparedStatement pStmt = conn.prepareStatement(sql); //PreparedStatementクラス：SQL文をDBに送信する
+				//?に条件文セット
+				pStmt.setString(1,userid);
+
+				// SELECTを実行
+				ResultSet rs = pStmt.executeQuery(); //ResultSetクラス：DBMSから検索結果受取,
+				
+
+				// SELECT文の結果をuserに格納
+				while (rs.next()) {
+					MoveInfo move = new MoveInfo();
+					move.setDay(rs.getString("day")); //DB内-列名をmoveクラスにセット
+					move.setStarttime(rs.getString("stime"));
+					move.setFinishtime(rs.getString("ftime"));
+					move.setPlace(rs.getString("place"));
+					move.setReason(rs.getString("reason"));
+					move.setOther(rs.getString("other"));
+					
+					searchList.add(move); //リスト追加
+				}
+			} catch (SQLException e) {//エラー処理
+				e.printStackTrace(); 
+				//return null;
+			}
+			return searchList;
+		}
+
+		
 		
 		//ユーザーを指定して、活動記録をDBに追加
 		//戻り値:true 成功 , false 失敗

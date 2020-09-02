@@ -72,27 +72,53 @@
 			</nav>
 			<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
 				<!-- コンテンツエリアの中身をインポート -->
-				<% //活動記録一覧ページ
+				<% //活動記録表示ページ
 					if (view != null && view.equals("activities")) {
 				%>
 					<jsp:include page="/WEB-INF/jsp/activities.jsp" />
 				
 				<% //活動記録登録ページ
-					} else if (view != null && view.equals("addActivities")) {
+					} 
+						else if (view != null && view.equals("addActivities")) {
 				%>
-					<jsp:include page="/WEB-INF/jsp/addActivities.jsp" />
+						<jsp:include page="/WEB-INF/jsp/addActivities.jsp" />
 				
-				<% //活動登録確認ページ
-					} else if (view != null && view.equals("addMoveInfo")) {
+				<% //新規グループページ
+					} 
+						else if (view != null && view.equals("addGroup")) {
 				%>	
-					
-					
-				<%
-					} else {
-				%>
-					<jsp:include page="/WEB-INF/jsp/stateView.jsp" />
-				<%
+						<jsp:include page="/WEB-INF/jsp/addGroup.jsp" />
 				
+				<% //グループ参加ページ
+					} 
+						else if (view != null && view.equals("joinGroup")) {
+				%>	
+						<jsp:include page="/WEB-INF/jsp/joinGroup.jsp" />
+					
+				<% //プロフィール確認ページ
+					} 
+						else if (view != null && view.equals("userInfo")) {
+				%>	
+						<jsp:include page="/WEB-INF/jsp/userInfo.jsp" />
+				
+				<% //管理ユーザー：グループ参加
+					} 
+						else if (view != null && view.equals("joinGroupMasterUser")) {
+				%>	
+						<jsp:include page="/WEB-INF/jsp/joinGroupMasterUser.jsp" />
+					
+				<% //管理ユーザー：グループ一覧
+					} 
+						else if (view != null && view.equals("memberList")) {
+				%>	
+						<jsp:include page="/WEB-INF/jsp/memberList.jsp" />
+					
+				<%
+					} 
+						else {
+				%>
+						<jsp:include page="/WEB-INF/jsp/stateView.jsp" />
+				<%
 					}
 				%>
 			</main>

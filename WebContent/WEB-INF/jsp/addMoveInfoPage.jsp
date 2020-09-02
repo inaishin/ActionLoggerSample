@@ -31,8 +31,8 @@
 	<div class="row">
 		<div class="col"></div>
 		<div class="col-8">
-			<form class="form-adduser" action="/WebSystem//addmoveconfirm"
-				method="post">
+			<form class="form-adduser" 
+				action="/WebSystem/addmoveconfirm" method="post">
 				
 				<h4 h3 mb-3 font-weight-normal>活動登録</h4>
 				<div class="mb-3">

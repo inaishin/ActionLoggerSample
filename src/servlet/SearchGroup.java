@@ -14,18 +14,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import model.MoveInfo;
+import java.util.List;
 
-//ユーザー追加機能
+import dao.MoveDAO;
+import model.MoveInfo;
+import model.SearchInfo;
+
+
+//管理グループ内検索処理
 //GETでアクセスされた場合　登録フォームを表示
 //POSTでアクセスされた場合　登録フォームから送られたデータを処理
 //登録フォームから送られたデータは、DB保存候補としてsession変数に保存
-
-@WebServlet("/move")
-public class AddMove extends HttpServlet {
+@WebServlet("/searchgroup")
+public class SearchGroup extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public AddMove() {
+    public SearchGroup() {
         super();
 
     }
@@ -34,38 +38,30 @@ public class AddMove extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException { //GETリクエスト
 	    RequestDispatcher dispatcher =
 		        req.getRequestDispatcher
-		            ("/WEB-INF/jsp/addActiviites.jsp"); //フォワード：情報渡し
+		            ("WebSystem?view=memberList"); //フォワード：情報渡し
 		    dispatcher.forward(req, resp);
 	}
-
+	
 	//POSTリクエスト時はフォームの入力値をUserクラスに渡す,登録確認ページを表示
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
 		
 		HttpSession session = req.getSession(); //セッションスコープの生成
-		String userid=(String)session.getAttribute("userid"); //セッションスコープからインスタンス取得
 		
-		MoveInfo move = new MoveInfo(); //MoveInfoクラスのインスタンス化
-		move.setDay( req.getParameter("day") ); //Moveクラスset~メソッドにリクエストパラメータ[day]を渡す
-		move.setStarttime( req.getParameter("starttime"));
-		move.setFinishtime( req.getParameter("finishtime") );
-		move.setPlace( req.getParameter("place") );
-		move.setReason( req.getParameter("reason") );
-		move.setOther( req.getParameter("other") );
-		move.setUseid(userid); //セッションスコープから取得した値をMoveInfoクラスにセット
-		
+		SearchInfo search = new SearchInfo(); //SearchInfoクラスのインスタンス化
+		search.setDay(req.getParameter("day")); //リクエストパラメータ[day]を渡す
+		search.setPlace(req.getParameter("place"));
 		try {
+			session.setAttribute("groupday", search.getDay()); //セッション保存
+			session.setAttribute("groupplace", search.getPlace()); 
 			
-			session.setAttribute("moveToAdd", move); //セッションスコープに"useToAdd"という属性名でuesrインスタンス保存 
-		    
 			RequestDispatcher dispatcher =
 			        req.getRequestDispatcher
-			            ("/WEB-INF/jsp/addMoveInfoPage.jsp"); //フォワード転送先指定
+			            ("WebSystem/?view=memberList"); //フォワード：情報渡し
 			    dispatcher.forward(req, resp);
 			
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
 	}
-
 }

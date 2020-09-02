@@ -61,7 +61,6 @@ public class LoginCheck extends HttpServlet {
 		    session.setAttribute("userid", user.getUserId() ); //セッションスコープ内に属性名userid,DB情報useridを保存
 		    session.setAttribute("username", user.getName()); //セッションスコープ内に属性名user,DB情報userを保存
 			resp.sendRedirect("/WebSystem/"); //リダイレクト:別ページに飛ばす,~/WebSystem/(MainUrl.java)に移行
-
 		}
 		else { //DBから取得失敗時,パスワード不一致時
 			//TODO ログインエラーにリダイレクト

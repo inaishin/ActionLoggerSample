@@ -27,27 +27,27 @@
 
 	<h6
 		class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-		<span>== 管理グループ ==</span> <a
+		<span>== グループ ==</span> <a
 			class="d-flex align-items-center text-muted" href="#"
 			aria-label="Add a new report"> <span data-feather="plus-circle"></span>
 		</a>
 	</h6>
 	<ul class="nav flex-column mb-2">
-		<li class="nav-item"><a class="nav-link" href="#"> 新規グループ </a></li>
-		<li class="nav-item"><a class="nav-link" href="#"> グループに参加 </a></li>
+		<li class="nav-item"><a class="nav-link" href="/WebSystem/?view=addGroup"> 新規グループ </a></li>
+		<li class="nav-item"><a class="nav-link" href="/WebSystem/?view=joinGroup"> グループに参加 </a></li>
 	</ul>
 
 	<h6
 		class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-		<span>== 管理中のグループ ==</span> <a
+		<span>== グループ管理 ==</span> <a
 			class="d-flex align-items-center text-muted" href="#"
 			aria-label="Add a new report"> <span data-feather="plus-circle"></span>
 		</a>
 	</h6>
 	<ul class="nav flex-column mb-2">
-		<li class="nav-item"><a class="nav-link" href="#"> KBC ITE19
+		<li class="nav-item"><a class="nav-link" href="/WebSystem/?view=joinGroupMasterUser">グループに参加<br>-管理ユーザー
 		</a></li>
-		<li class="nav-item"><a class="nav-link" href="#"> KBC 教職員 </a></li>
+		<li class="nav-item"><a class="nav-link" href="/WebSystem/?view=memberList">管理グループ一覧</a></li>
 	</ul>
 
 	<h6
@@ -58,10 +58,9 @@
 		</a>
 	</h6>
 	<ul class="nav flex-column mb-2">
-		<li class="nav-item"><a class="nav-link" href="#"> プロフィール確認 </a>
+		<li class="nav-item"><a class="nav-link" href="/WebSystem/?view=userInfo"> プロフィール確認 </a>
 		</li>
-		<li class="nav-item"><a class="nav-link" href="#"> プロフィール変更 </a>
-		</li>
+		
 	</ul>
 
 
