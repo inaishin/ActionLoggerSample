@@ -5,7 +5,10 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
+import model.GroupInfo;
 import model.UserInfo;
 
 //DB上のuserテーブルに対応するDAO,DAO:データベースの操作を担当するクラス
@@ -48,6 +51,7 @@ public class UserDAO {
 		return user;
 	}
 
+	
 	//ユーザーを指定して、ユーザー情報を保存
 	//戻り値:true 成功 , false 失敗
 	public boolean save(UserInfo user) {
@@ -77,4 +81,40 @@ public class UserDAO {
 		}
 		return true;
 	}
+	
+	
+	//プロフｨ表示
+	public List<UserInfo> find(String userid) { //DB内情報の全取得,引数ありでログイン中のuserid受取
+		List<UserInfo> userList=new ArrayList<>(); //list生成
+
+		// データベース接続
+		try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
+			
+			// SELECT文の準備
+			String sql = "SELECT userid , name,address ,tel, email  FROM USER WHERE userid =?";
+			PreparedStatement pStmt = conn.prepareStatement(sql); //PreparedStatementクラス：SQL文をDBに送信する
+			pStmt.setString(1, userid); //パラメーターセット
+			
+			// SELECTを実行
+			ResultSet rs = pStmt.executeQuery(); //ResultSetクラス：DBMSから検索結果受取,
+					
+
+					// SELECT文の結果をuserに格納
+					while (rs.next()) {
+						UserInfo user= new UserInfo();
+						user.setUserId(rs.getString("userid")); //列名useridの値をセット
+						user.setName(rs.getString("name"));
+						user.setAddress(rs.getString("address"));
+						user.setTel(rs.getString("tel"));
+						user.setEmail(rs.getString("email"));
+						
+						userList.add(user); //リスト追加
+					}
+				} catch (SQLException e) {//エラー処理
+					e.printStackTrace(); 
+					//return null;
+				}
+				return userList;
+			}
+	
 }

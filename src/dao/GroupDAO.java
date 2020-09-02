@@ -84,8 +84,7 @@ public class GroupDAO {
 			try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
 
 				// INSERT文の準備(idは自動連番なので指定しなくてよい）
-				String sql = "INSERT　INTO TEAMID_USERID " + "( teamid, userid) "
-						+ "VALUES ( ?, ? )";
+				String sql = "INSERT　INTO TEAMID_USERID " + "( teamid, userid) "+ "VALUES ( ?, ? )";
 				PreparedStatement pStmt = conn.prepareStatement(sql); //PreparedStatementインターフェース:SQL文を表す
 				// INSERT文中の「?」に使用する値を設定しSQLを完成
 				pStmt.setString(1, teamid); //DBにデータ登録
@@ -93,6 +92,7 @@ public class GroupDAO {
 			
 				// INSERT文を実行
 				int result = pStmt.executeUpdate();
+				
 				if (result != 1) {
 					return false;
 				}
