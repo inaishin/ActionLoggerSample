@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -48,8 +49,12 @@ public class AddGroupMember extends HttpServlet {
 			try {
 				String userid=(String)session.getAttribute("userid"); //セッションスコープからインスタンス取得
 				GroupDAO group= new GroupDAO();
-				
 				group.savaTeamidUseidr(groupinfo.getGroupid(),userid );
+				
+				String txt="ID="+groupinfo.getGroupid()+"のグループに参加";
+				ServletContext sc = getServletContext();  //アプリケーションスコープ
+				sc.setAttribute("memberlog", txt); //アプリケーション保存
+				
 				RequestDispatcher dispatcher =
 				        req.getRequestDispatcher
 				            ("WebSystem/?view=joinGroup"); //フォワード：情報渡し

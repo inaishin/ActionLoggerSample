@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -48,6 +49,10 @@ public class AddGroup extends HttpServlet {
 		group.setGroupname( req.getParameter("groupname"));
 		
 		try {
+			String txt="ID="+group.getGroupid()+",名="+group.getGroupname()+"のグループ作成完了";
+			
+			ServletContext sc = getServletContext();  //アプリケーションスコープ
+			sc.setAttribute("log", txt); //アプリケーション保存
 			
 			GroupDAO groupdao=new GroupDAO();
 			groupdao.save(group);

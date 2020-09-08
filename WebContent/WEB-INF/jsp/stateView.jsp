@@ -9,6 +9,8 @@
 <%@page import="dao.MoveDAO"%>  <% //DB検索に関するクラスインポート %>
 <%@ page import="model.MoveInfo"%>
 <%@page import="java.util.List" %>
+<%@ page import="dao.GroupDAO" %>
+<%@ page import="model.GroupInfo" %>
 
 <!-- トップページ -->
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
@@ -26,7 +28,36 @@
               <th scope="row" class="col-2 text-right">氏名</th>
               <td><%=username %></td>
             </tr>
-            
+            <tr class="d-flex">
+              <th scope="row" class="col-2 text-right">参加グループ</th>
+              		<% GroupDAO groupdao= new GroupDAO(); //MoveDAOインスタンス生成 %>
+					<% List<GroupInfo> groupList=groupdao.findUser(userid); //MoveDAO内findAll(テーブル全検索)をリストに格納%> 
+					<% 
+						for(GroupInfo group : groupList){ //リスト内に格納されてるMoveInfoクラスを返す
+					%>
+							<%//各クラスごとに格納されてる要素取得 %>
+							<td><%=group.getGroupname() %></td>
+					<% 		
+						}
+					%>
+             
+            </tr>
+            <tr class="d-flex">
+              <th scope="row" class="col-2 text-right"></th>
+              <td></td>
+            </tr>
+            <tr class="d-flex">
+              <th scope="row" class="col-2 text-right">管理グループ</th>
+					<% List<GroupInfo> groupList2=groupdao.findMaster(userid); //MoveDAO内findAll(テーブル全検索)をリストに格納%> 
+					<% 
+						for(GroupInfo group : groupList2){ //リスト内に格納されてるMoveInfoクラスを返す
+					%>
+							<%//各クラスごとに格納されてる要素取得 %>
+							<td><%=group.getGroupname() %></td>
+					<% 		
+						}
+					%>
+            </tr>
             <tr class="d-flex">
               <th scope="row" class="col-2 text-right"></th>
               <td></td>

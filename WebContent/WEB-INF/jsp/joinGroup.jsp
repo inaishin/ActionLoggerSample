@@ -4,6 +4,7 @@
 <%@ page import="model.GroupInfo"%>
 <%@page import="dao.GroupDAO"%>  <% //DB検索に関するクラスインポート %>
 <%@page import="java.util.List" %>
+<%String txt=(String)application.getAttribute("memberlog"); %> <%//アプリケーションスコープの取得 %>
     
  <%//グループ一覧/参加ページ %>
 <!DOCTYPE html>
@@ -61,6 +62,8 @@
 			<input type="submit" value="参加">
 		</form>
 	</dvi>
+	
+	
 	
 	
 

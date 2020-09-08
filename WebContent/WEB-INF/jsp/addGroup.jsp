@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="UTF-8"%>
 
+<%String txt=(String)application.getAttribute("log"); %> <%//アプリケーションスコープの取得 %>
 
 <!DOCTYPE html>
 <html>
@@ -27,9 +28,12 @@
 			
 			<input type="submit" value="グループ作成">
 		</form>
+		
 	</div>
 	
-
-
+	<div class="table-responsive">
+		<%=txt %>
+	</div>
+	
 </body>
 </html>

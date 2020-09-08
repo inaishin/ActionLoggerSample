@@ -4,6 +4,8 @@
 <%@ page import="model.GroupInfo"%>
 <%@page import="dao.GroupDAO"%>  <% //DB検索に関するクラスインポート %>
 <%@page import="java.util.List" %>
+
+<%String txt=(String)application.getAttribute("masterlog"); %> <%//アプリケーションスコープの取得 %>
     
  <%//グループ一覧/参加ページ %>
 <!DOCTYPE html>
@@ -62,7 +64,9 @@
 		</form>
 	</dvi>
 	
-	
+	<div class="table-responsive">
+		<%=txt %>
+	</div>
 
 </body>
 </html>

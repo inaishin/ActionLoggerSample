@@ -139,10 +139,9 @@ public class GroupDAO {
 			try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
 					
 				// SELECT文の準備
-				String sql ="SELECT team.TEAMNAME ,user.NAME ,day,STIME ,FTIME ,PLACE ,reason,other "
-						+ "FROM TEAMID_USERID as ID join USER join TEAM join MOVE join TEAMID_MASTERID  as ms "
-						+ "WHERE ID.teamid=team.teamid and ID.userid=user.userid and user.userid =move.userid and ms.MASTERID =? "
-						+ "ORDER BY user.name , move.DAY DESC,move.STIME ";
+				String sql ="SELECT team.TEAMNAME ,user.NAME ,day,STIME ,FTIME ,PLACE ,reason,other from TEAMID_USERID as ID join TEAM join MOVE join user "
+						+ "WHERE ID.TEAMID  =  (SELECT teamid from TEAMID_MASTERID  where MASTERID =?) and ID.teamid =TEAM.TEAMID and MOVE.USERID =ID.USERID and user.USERID = ID.userid "
+						+ "ORDER BY team.teamid, user.name , move.DAY DESC,move.STIME ";
 				PreparedStatement pStmt = conn.prepareStatement(sql); //PreparedStatementクラス：SQL文をDBに送信する
 				pStmt.setString(1,masterid); //パラメーターセット
 				// SELECTを実行
@@ -179,9 +178,9 @@ public class GroupDAO {
 			try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
 					
 				// SELECT文の準備
-				String sql ="SELECT team.TEAMNAME ,user.NAME ,day,STIME ,FTIME ,PLACE ,reason,other FROM TEAMID_USERID as ID join USER join TEAM join MOVE join TEAMID_MASTERID  as ms "
-						+ "WHERE ID.teamid=team.teamid and ID.userid=user.userid and user.userid =move.userid and ms.MASTERID =? and DAY LIKE '%"+day+"%' AND PLACE LIKE '%"+place+"%'"
-						+ "ORDER BY user.name , move.DAY DESC,move.STIME ";
+				String sql ="SELECT team.TEAMNAME ,user.NAME ,day,STIME ,FTIME ,PLACE ,reason,other from TEAMID_USERID as ID join TEAM join MOVE join user "
+						+ "WHERE ID.TEAMID  =  (SELECT teamid from TEAMID_MASTERID  where MASTERID =?) and ID.teamid =TEAM.TEAMID and MOVE.USERID =ID.USERID and user.USERID = ID.userid and DAY LIKE '%"+day+"%' AND PLACE LIKE '%"+place+"%'"
+						+ "ORDER BY team.teamid, user.name , move.DAY DESC,move.STIME ";
 				PreparedStatement pStmt = conn.prepareStatement(sql); //PreparedStatementクラス：SQL文をDBに送信する
 				pStmt.setString(1,masterid); //パラメーターセット
 				// SELECTを実行
@@ -208,6 +207,69 @@ public class GroupDAO {
 			}
 			return groupList;
 		}
+		
+		
+		
+		//所属グループ取得
+		public List<GroupInfo> findUser(String userid) { //DB内情報の全取得,引数ありでログイン中のuserid受取
+			List<GroupInfo> groupList=new ArrayList<>(); //list生成
+
+			// データベース接続
+			try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
+					
+				// SELECT文の準備
+				String sql = "SELECT teamname FROM TEAMID_USERID  as a join  TEAM  as b WHERE a.teamid =b.teamid and userid=?";
+				PreparedStatement pStmt = conn.prepareStatement(sql); //PreparedStatementクラス：SQL文をDBに送信する
+				pStmt.setString(1, userid); //パラメータセット
+				// SELECTを実行
+				ResultSet rs = pStmt.executeQuery(); //ResultSetクラス：DBMSから検索結果受取,
+				
+
+				// SELECT文の結果をuserに格納
+				while (rs.next()) {
+					GroupInfo group = new GroupInfo();
+					group.setGroupname(rs.getString("teamname")); //DB内-列名をmoveクラスにセット
+					
+					groupList.add(group); //リスト追加
+				}
+			} catch (SQLException e) {//エラー処理
+				e.printStackTrace(); 
+				//return null;
+			}
+			return groupList;
+		}
+		
+		
+		
+		//管理ユーザーグループ取得
+				public List<GroupInfo> findMaster(String userid) { //DB内情報の全取得,引数ありでログイン中のuserid受取
+					List<GroupInfo> groupList=new ArrayList<>(); //list生成
+
+					// データベース接続
+					try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
+							
+						// SELECT文の準備
+						String sql = "SELECT teamname FROM TEAMID_MASTERID  as a join  TEAM  as b WHERE a.teamid =b.teamid and masterid=?";
+						PreparedStatement pStmt = conn.prepareStatement(sql); //PreparedStatementクラス：SQL文をDBに送信する
+						pStmt.setString(1, userid); //パラメータセット
+						// SELECTを実行
+						ResultSet rs = pStmt.executeQuery(); //ResultSetクラス：DBMSから検索結果受取,
+						
+
+						// SELECT文の結果をuserに格納
+						while (rs.next()) {
+							GroupInfo group = new GroupInfo();
+							group.setGroupname(rs.getString("teamname")); //DB内-列名をmoveクラスにセット
+							
+							groupList.add(group); //リスト追加
+						}
+					} catch (SQLException e) {//エラー処理
+						e.printStackTrace(); 
+						//return null;
+					}
+					return groupList;
+				}
+		
 			
 			
 }

@@ -35,7 +35,6 @@
 			</tr>
 		</thead>
 		<tbody>
-			<%=masterid %></p>
 		
 			<%//グループ内一覧 %>
 			<% GroupDAO groupDao= new GroupDAO(); //GroupDAOインスタンス生成 %>
