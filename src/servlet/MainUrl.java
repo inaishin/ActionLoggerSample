@@ -30,6 +30,7 @@ public class MainUrl extends HttpServlet{
 	    if(userid==null) {
 	    	response.sendRedirect("/WebSystem/login"); //レスポンスで別ページ呼び出し
 	    }
+	    
 	    else {
 	    	//トップページを表示
 		    RequestDispatcher dispatcher =
