@@ -63,6 +63,9 @@
 		</form>
 	</dvi>
 	
+	<div class="table-responsive">
+		<p>ログ：<%=txt %></p>
+	</div>
 	
 	
 	

@@ -65,7 +65,7 @@
 	</dvi>
 	
 	<div class="table-responsive">
-		<%=txt %>
+		<p>ログ：<%=txt %></p>
 	</div>
 
 </body>
